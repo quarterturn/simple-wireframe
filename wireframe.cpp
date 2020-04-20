@@ -201,13 +201,26 @@ int main(int argc, char **argv)
         Vec3f &v1 = vertices[nvertices[i * 3 + 1]];
         Vec3f &v2 = vertices[nvertices[i * 3 + 2]];
         
+        float theta = 90.0;
+        float s = sin(theta);
+        float c = cos(theta);
+        const Matrix44f mRotateX = {1, 0, 0, 0, 0, c, -s, 0, 0, s, c, 0, 0, 0, 0, 1};
+        
+        Vec3f vr0, vr1, vr2;
+        mRotateX.multVecMatrix(v0, vr0);
+        mRotateX.multVecMatrix(v1, vr1);
+        mRotateX.multVecMatrix(v2, vr2);
+        
         // [comment]
         // Convert the vertices of the triangle to raster space
         // [/comment]
         Vec3f v0Raster, v1Raster, v2Raster;
-        convertToRaster(v0, worldToCamera, l, r, t, b, nearClippingPLane, imageWidth, imageHeight, v0Raster);
-        convertToRaster(v1, worldToCamera, l, r, t, b, nearClippingPLane, imageWidth, imageHeight, v1Raster);
-        convertToRaster(v2, worldToCamera, l, r, t, b, nearClippingPLane, imageWidth, imageHeight, v2Raster);
+//        convertToRaster(v0, worldToCamera, l, r, t, b, nearClippingPLane, imageWidth, imageHeight, v0Raster);
+//        convertToRaster(v1, worldToCamera, l, r, t, b, nearClippingPLane, imageWidth, imageHeight, v1Raster);
+//        convertToRaster(v2, worldToCamera, l, r, t, b, nearClippingPLane, imageWidth, imageHeight, v2Raster);
+        convertToRaster(vr0, worldToCamera, l, r, t, b, nearClippingPLane, imageWidth, imageHeight, v0Raster);
+        convertToRaster(vr1, worldToCamera, l, r, t, b, nearClippingPLane, imageWidth, imageHeight, v1Raster);
+        convertToRaster(vr2, worldToCamera, l, r, t, b, nearClippingPLane, imageWidth, imageHeight, v2Raster);
         
         // [comment]
         // Precompute reciprocal of vertex z-coordinate
