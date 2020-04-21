@@ -202,18 +202,23 @@ int main(int argc, char **argv)
         Vec3f &v2 = vertices[nvertices[i * 3 + 2]];
         
         float xRadians = 0.0;
-        float yRadians = 0.0;
-        float zRadians = 0.785;
-        float s = sin(zRadians);
-        float c = cos(zRadians);
-        const Matrix44f mRotateX = {1, 0, 0, 0, 0, c, -s, 0, 0, s, c, 0, 0, 0, 0, 1};
-        const Matrix44f mRotateY = {c, 0, s, 0, 0, 1, 0, 0, -s, 0, c, 0, 0, 0, 0, 1};
-        const Matrix44f mRotateZ = {c, -s, 0, 0, s, c, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1};
+        float yRadians = 1.0;
+        float zRadians = 0.0;
+        float sx = sin(xRadians);
+        float sy = sin(yRadians);
+        float sz = sin(zRadians);
+        float cx = cos(xRadians);
+        float cy = cos(yRadians);
+        float cz = cos(zRadians);
+        
+        const Matrix44f mRotateX = {1, 0, 0, 0, 0, cx, -sx, 0, 0, sx, cx, 0, 0, 0, 0, 1};
+        const Matrix44f mRotateY = {cy, 0, sy, 0, 0, 1, 0, 0, -sy, 0, cy, 0, 0, 0, 0, 1};
+        const Matrix44f mRotateZ = {cz, -sz, 0, 0, sz, cz, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1};
         
         Vec3f vr0, vr1, vr2;
-        mRotateZ.multVecMatrix(v0, vr0);
-        mRotateZ.multVecMatrix(v1, vr1);
-        mRotateZ.multVecMatrix(v2, vr2);
+        mRotateY.multVecMatrix(v0, vr0);
+        mRotateY.multVecMatrix(v1, vr1);
+        mRotateY.multVecMatrix(v2, vr2);
         
         // [comment]
         // Convert the vertices of the triangle to raster space
