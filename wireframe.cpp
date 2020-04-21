@@ -201,15 +201,19 @@ int main(int argc, char **argv)
         Vec3f &v1 = vertices[nvertices[i * 3 + 1]];
         Vec3f &v2 = vertices[nvertices[i * 3 + 2]];
         
-        float theta = 90.0;
-        float s = sin(theta);
-        float c = cos(theta);
+        float xRadians = 0.0;
+        float yRadians = 0.0;
+        float zRadians = 0.785;
+        float s = sin(zRadians);
+        float c = cos(zRadians);
         const Matrix44f mRotateX = {1, 0, 0, 0, 0, c, -s, 0, 0, s, c, 0, 0, 0, 0, 1};
+        const Matrix44f mRotateY = {c, 0, s, 0, 0, 1, 0, 0, -s, 0, c, 0, 0, 0, 0, 1};
+        const Matrix44f mRotateZ = {c, -s, 0, 0, s, c, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1};
         
         Vec3f vr0, vr1, vr2;
-        mRotateX.multVecMatrix(v0, vr0);
-        mRotateX.multVecMatrix(v1, vr1);
-        mRotateX.multVecMatrix(v2, vr2);
+        mRotateZ.multVecMatrix(v0, vr0);
+        mRotateZ.multVecMatrix(v1, vr1);
+        mRotateZ.multVecMatrix(v2, vr2);
         
         // [comment]
         // Convert the vertices of the triangle to raster space
