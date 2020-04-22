@@ -72,8 +72,8 @@ const unsigned int lut[] PROGMEM = {         // 0 to 90 degrees fixed point COSI
   16384, 16381, 16374, 16361, 16344, 16321, 16294, 16261, 16224, 16182, 16135, 16082, 16025, 15964, 15897, 15825, 15749, 15668, 15582, 15491, 15395, 15295, 15190, 15081, 14967, 14848, 14725, 14598, 14466, 14329, 14188, 14043, 13894, 13740, 13582, 13420, 13254, 13084, 12910, 12732, 12550, 12365, 12175, 11982, 11785, 11585, 11381, 11173, 10963, 10748, 10531, 10310, 10086, 9860, 9630, 9397, 9161, 8923, 8682, 8438, 8191, 7943, 7691, 7438, 7182, 6924, 6663, 6401, 6137, 5871, 5603, 5334, 5062, 4790, 4516, 4240, 3963, 3685, 3406, 3126, 2845, 2563, 2280, 1996, 1712, 1427, 1142, 857, 571, 285, 0
 };
 
-const uint32_t imageWidth = 4095;
-const uint32_t imageHeight = 4095;
+const uint32_t imageWidth = 10;
+const uint32_t imageHeight = 10;
 // | c00 c01 c02 c03 | -> x-axis
 // | c10 c11 c12 c13 | -> y-axis
 // | c20 c21 c22 c23 | -> z-axis
@@ -83,7 +83,7 @@ const Matrix44f worldToCamera = {0.707107, -0.331295, 0.624695, 0, 0, 0.883452, 
 
 const uint32_t ntris = 3156;
 const float nearClippingPLane = 1;
-const float farClippingPLane = 4095;
+const float farClippingPLane = 10;
 float focalLength = 20; // in mm
 // 35mm Full Aperture in inches
 float filmApertureWidth = 0.980;
@@ -136,10 +136,10 @@ void convertToRaster(
 // utility functions
 // ----------------------------------------------
 float min3(const float &a, const float &b, const float &c)
-{ return std::min(a, std::min(b, c)); }
+{ return min(a, min(b, c)); }
 
 float max3(const float &a, const float &b, const float &c)
-{ return std::max(a, std::max(b, c)); }
+{ return max(a, max(b, c)); }
 
 float edgeFunction(const Vec3f &a, const Vec3f &b, const Vec3f &c)
 { return (c[0] - a[0]) * (b[1] - a[1]) - (c[1] - a[1]) * (b[0] - a[0]); }
@@ -353,10 +353,10 @@ void loop() {
               if (xmin > imageWidth - 1 || xmax < 0 || ymin > imageHeight - 1 || ymax < 0) continue;
       
               // be careful xmin/xmax/ymin/ymax can be negative. Don't cast to uint32_t
-              uint32_t x0 = std::max(int32_t(0), (int32_t)(std::floor(xmin)));
-              uint32_t x1 = std::min(int32_t(imageWidth) - 1, (int32_t)(std::floor(xmax)));
-              uint32_t y0 = std::max(int32_t(0), (int32_t)(std::floor(ymin)));
-              uint32_t y1 = std::min(int32_t(imageHeight) - 1, (int32_t)(std::floor(ymax)));
+              uint32_t x0 = max(int32_t(0), (int32_t)(floor(xmin)));
+              uint32_t x1 = min(int32_t(imageWidth) - 1, (int32_t)(floor(xmax)));
+              uint32_t y0 = max(int32_t(0), (int32_t)(floor(ymin)));
+              uint32_t y1 = min(int32_t(imageHeight) - 1, (int32_t)(floor(ymax)));
       
               float area = edgeFunction(v0Raster, v1Raster, v2Raster);
               
@@ -414,7 +414,7 @@ void loop() {
                               Vec3f viewDirection = -pt;
                               viewDirection.normalize();
                               
-                              float nDotView =  std::max(0.f, n.dotProduct(viewDirection));
+                              float nDotView =  max(0.f, n.dotProduct(viewDirection));
                               
                               int val = 255;
                              

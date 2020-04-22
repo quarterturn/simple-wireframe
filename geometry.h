@@ -28,11 +28,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //[/ignore]
-#include <cstdlib>
-#include <cstdio>
+//#include <cstdlib>
+//#include <cstdio>
 //#include <iostream>
 //#include <iomanip>
-#include <cmath>
+//#include <cmath>
 
 template<typename T> class Vec2
 {
