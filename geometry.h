@@ -30,8 +30,8 @@
 //[/ignore]
 #include <cstdlib>
 #include <cstdio>
-#include <iostream>
-#include <iomanip>
+//#include <iostream>
+//#include <iomanip>
 #include <cmath>
 
 template<typename T> class Vec2
@@ -50,10 +50,10 @@ public:
     { x /= r, y /= r; return *this; }
     Vec2& operator *= (const T &r)
     { x *= r, y *= r; return *this; }
-    friend std::ostream& operator << (std::ostream &s, const Vec2<T> &v)
-    {
-        return s << '[' << v.x << ' ' << v.y << ']';
-    }
+//    friend std::ostream& operator << (std::ostream &s, const Vec2<T> &v)
+//    {
+//        return s << '[' << v.x << ' ' << v.y << ']';
+//    }
     friend Vec2 operator * (const T &r, const Vec2<T> &v)
     { return Vec2(v.x * r, v.y * r); }
     T x, y;
@@ -124,10 +124,10 @@ public:
     friend Vec3 operator / (const T &r, const Vec3 &v)
     { return Vec3<T>(r / v.x, r / v.y, r / v.z); }
 
-    friend std::ostream& operator << (std::ostream &s, const Vec3<T> &v)
-    {
-        return s << '[' << v.x << ' ' << v.y << ' ' << v.z << ']';
-    }
+//    friend std::ostream& operator << (std::ostream &s, const Vec3<T> &v)
+//    {
+//        return s << '[' << v.x << ' ' << v.y << ' ' << v.z << ']';
+//    }
     
     T x, y, z;
 };
@@ -465,36 +465,36 @@ public:
         return *this;
     }
 
-    friend std::ostream& operator << (std::ostream &s, const Matrix44 &m)
-    {
-        std::ios_base::fmtflags oldFlags = s.flags();
-        int width = 12; // total with of the displayed number
-        s.precision(5); // control the number of displayed decimals
-        s.setf (std::ios_base::fixed);
-        
-        s << "[" << std::setw (width) << m[0][0] <<
-             " " << std::setw (width) << m[0][1] <<
-             " " << std::setw (width) << m[0][2] <<
-             " " << std::setw (width) << m[0][3] << "\n" <<
-            
-             " " << std::setw (width) << m[1][0] <<
-             " " << std::setw (width) << m[1][1] <<
-             " " << std::setw (width) << m[1][2] <<
-             " " << std::setw (width) << m[1][3] << "\n" <<
-            
-             " " << std::setw (width) << m[2][0] <<
-             " " << std::setw (width) << m[2][1] <<
-             " " << std::setw (width) << m[2][2] <<
-             " " << std::setw (width) << m[2][3] << "\n" <<
-            
-             " " << std::setw (width) << m[3][0] <<
-             " " << std::setw (width) << m[3][1] <<
-             " " << std::setw (width) << m[3][2] <<
-             " " << std::setw (width) << m[3][3] << "]";
-        
-        s.flags (oldFlags);
-        return s;
-    }
+//    friend std::ostream& operator << (std::ostream &s, const Matrix44 &m)
+//    {
+//        std::ios_base::fmtflags oldFlags = s.flags();
+//        int width = 12; // total with of the displayed number
+//        s.precision(5); // control the number of displayed decimals
+//        s.setf (std::ios_base::fixed);
+//        
+//        s << "[" << std::setw (width) << m[0][0] <<
+//             " " << std::setw (width) << m[0][1] <<
+//             " " << std::setw (width) << m[0][2] <<
+//             " " << std::setw (width) << m[0][3] << "\n" <<
+//            
+//             " " << std::setw (width) << m[1][0] <<
+//             " " << std::setw (width) << m[1][1] <<
+//             " " << std::setw (width) << m[1][2] <<
+//             " " << std::setw (width) << m[1][3] << "\n" <<
+//            
+//             " " << std::setw (width) << m[2][0] <<
+//             " " << std::setw (width) << m[2][1] <<
+//             " " << std::setw (width) << m[2][2] <<
+//             " " << std::setw (width) << m[2][3] << "\n" <<
+//            
+//             " " << std::setw (width) << m[3][0] <<
+//             " " << std::setw (width) << m[3][1] <<
+//             " " << std::setw (width) << m[3][2] <<
+//             " " << std::setw (width) << m[3][3] << "]";
+//        
+//        s.flags (oldFlags);
+//        return s;
+//    }
 };
 
 typedef Matrix44<float> Matrix44f;

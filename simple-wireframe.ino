@@ -94,7 +94,6 @@ float filmApertureHeight = 0.735;
 // ----------------------------------------------
 // XYscope.plotLine(x0, y0, x1, y1);
 
-
 // ----------------------------------------------
 // compute vertex raster screen coordinates
 // ----------------------------------------------
@@ -185,8 +184,7 @@ void computeScreenCoordinates(
 
     // field of view (horizontal)
     float fov = 2 * 180 / M_PI * atan((filmApertureWidth * inchToMm / 2) / focalLength);
-    std::cerr << "Field of view " << fov << std::endl;
-    
+
     float xscale = 1;
     float yscale = 1;
     
@@ -221,9 +219,9 @@ void computeScreenCoordinates(
 // define the frame-buffer and the depth-buffer. Initialize depth buffer
 // to far clipping plane.
 Vec3<unsigned char> *frameBuffer = new Vec3<unsigned char>[imageWidth * imageHeight];
-for (uint32_t i = 0; i < imageWidth * imageHeight; ++i) frameBuffer[i] = Vec3<unsigned char>(255);
+
 float *depthBuffer = new float[imageWidth * imageHeight];
-for (uint32_t i = 0; i < imageWidth * imageHeight; ++i) depthBuffer[i] = farClippingPLane;
+
 
 float xDeg = 0.0;
 float yDeg = 0.0;
@@ -239,6 +237,9 @@ void setup() {
   #ifdef DEBUG
     Serial.begin(115200);
   #endif
+
+  for (uint32_t i = 0; i < imageWidth * imageHeight; ++i) frameBuffer[i] = Vec3<unsigned char>(255);
+  for (uint32_t i = 0; i < imageWidth * imageHeight; ++i) depthBuffer[i] = farClippingPLane;
 
   double DmaFreq=800000;    //800000 (Hz) is the default startup value for the DMA frequency.
                 //You can try various alternate values to find an optimal
